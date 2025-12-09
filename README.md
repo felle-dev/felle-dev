@@ -6,8 +6,4 @@ I tinker with Linux, write scripts, and occasionally build things that work. Mos
 - **Code:** Neovim, JDK, Zsh, and C when I have to
 - **Tools:** Git, Waybar, Kitty, and whatever else to gets the job done
 
-## Stats
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=felle-gram&show_icons=true&theme=transparent&hide_title=true)
-![Top languages](https://github-readme-stats.vercel.app/api/top-langs/?username=felle-gram&layout=compact&theme=transparent)
-
 You can find more of my stuff at [felle.site](https://felle.site).
