@@ -1,5 +1,6 @@
 # felle
-I like to tinkering with my computer, write scripts, and occasionally build things that work. Most of my time is spent in a terminal, tweaking config files, or trying to make my setup a little less annoying.
+I like to tinkering with my computer, write scripts, and occasionally build things that work. Most of my time is spent in a terminal, tweaking [config files](https://github.com/felle-dev/hyprland-dotfiles), or trying to make my setup a little less annoying.
+
 
 ## What I use
 - **OS:** Arch GNU+Linux
