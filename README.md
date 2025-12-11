@@ -16,7 +16,6 @@ Most of my time is spent in a terminal, tweaking [config files](https://github.c
 ## Contact
 
 You can find me on:
-- **GitHub:** [@felle-dev](https://github.com/felle-dev)
 - **Twitter/X:** [@_f3lle](https://x.com/_f3lle)
 - **Instagram:** [@fell3_u](https://instagram.com/fell3_u)
 - **TikTok:** [@felle-to](https://tiktok.com/@felle-to)
