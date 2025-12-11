@@ -11,10 +11,8 @@ Most of my time is spent in a terminal, tweaking [config files](https://github.c
 
 ## Stats
 
-[![felle's GitHub stats-Dark](https://github-readme-stats.vercel.app/api?username=felle-dev&show_icons=true&theme=dark#gh-dark-mode-only)](https://github.com/felle-dev/github-readme-stats#gh-dark-mode-only)
 [![felle's GitHub stats-Light](https://github-readme-stats.vercel.app/api?username=felle-dev&show_icons=true&theme=default#gh-light-mode-only)](https://github.com/felle-dev/github-readme-stats#gh-light-mode-only)
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=felle-dev&layout=compact&theme=dark#gh-dark-mode-only)](https://github.com/felle-dev/github-readme-stats#gh-dark-mode-only)
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=felle-dev&layout=compact&theme=default#gh-light-mode-only)](https://github.com/felle-dev/github-readme-stats#gh-light-mode-only)heme=dark&hide_border=true)
 
 ## Contact
 
