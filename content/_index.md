@@ -1,7 +1,7 @@
 ---
-lead: "Basic, simple and minimal Hugo theme"
+lead: "Hey there! i'm Felle"
 ---
 
-This is a demo of the `not-much` theme, built with Hugo, and is intended to be trouble-free. Explore it to see what `not-much` has to offer.
+welcome to my `little corner of the internet`. you’ll find all of my project, posts, and whatever else i'm excited about just right here :3.
 
-💡 Check the [about page](./about) to learn more about this theme.
+💡 Check the [about page](./about) to learn more about me.

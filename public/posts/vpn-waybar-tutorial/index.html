@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="http://localhost:1313/favicon.ico" />
+<meta property="og:url" content="http://localhost:1313/posts/vpn-waybar-tutorial/">
+  <meta property="og:site_name" content="felle.site/">
+  <meta property="og:title" content="How to create a custom VPN toggle script for Waybar">
+  <meta property="og:description" content="Tutorial showcasing how to build a custom VPN toggle script with random server selection for Waybar using ProtonVPN and OpenVPN.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-01-18T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-01-18T00:00:00+00:00">
+    <meta property="article:tag" content="GNU/Linux">
+    <meta property="article:tag" content="Tutorials">
+    <meta property="article:tag" content="VPN">
+
+<title>felle.site/ | How to create a custom VPN toggle script for Waybar</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+  
+      <link rel="stylesheet" href="/css/palette/eink.css">
+
+      <script src="/js/main.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+  
+<body
+>
+  
+  <main>
+    
+  <div class="container pt-5">
+    <div class="row mt-5 pt-5">
+      
+  <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleMenu" aria-controls="collapsibleMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mt-3 mt-md-0" id="collapsibleMenu">
+      <ol class="breadcrumb fw-bold">
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/"
+        
+      >home</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/about"
+        
+      >about</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/posts"
+        class="text-decoration-underline link-offset-3"
+        
+      >posts</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/tags"
+        
+      >tags</a>
+      
+    </li>
+      </ol>
+    </div>
+  </nav>
+
+    </div>
+    <div class="post">
+      <header class="mb-4">
+        <h1 class="text-uppercase">How to create a custom VPN toggle script for Waybar</h1>
+        
+        
+        <div aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item small">
+              
+              <time datetime="2026-01-18T00:00:00&#43;00:00">January 18, 2026</time>
+            </li>
+            
+            
+            <li class="breadcrumb-item small">
+              6 minutes
+            </li>
+          </ol>
+        </div>
+      </header>
+      
+      <article>
+        <p>This tutorial demonstrates how to build a custom VPN toggle script for Waybar that integrates with ProtonVPN, provides random server selection, and sends desktop notifications.</p>
+<h2 id="overview">Overview</h2>
+<p>Managing VPN connections on Linux through terminal commands gets tedious fast. This guide walks through building a Waybar module that:</p>
+<ul>
+<li>Shows current VPN status and connected country</li>
+<li>Toggles VPN with a single click</li>
+<li>Randomly selects from available servers</li>
+<li>Sends desktop notifications for connection events</li>
+<li>Handles multiple ProtonVPN configs automatically</li>
+</ul>
+<p>The final result is about 100 lines of bash across two scripts that integrate seamlessly with your status bar.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before starting, ensure you have:</p>
+<ul>
+<li>Basic bash scripting knowledge</li>
+<li>Linux system with systemd</li>
+<li>ProtonVPN account (free or paid)</li>
+<li>Waybar installed and configured</li>
+<li>Root/sudo access for system configuration</li>
+</ul>
+<h2 id="environment-setup">Environment Setup</h2>
+<h3 id="required-packages">Required Packages</h3>
+<p>Install OpenVPN and notification support:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># Arch Linux</span>
+</span></span><span style="display:flex;"><span>sudo pacman -S openvpn libnotify
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Ubuntu/Debian  </span>
+</span></span><span style="display:flex;"><span>sudo apt install openvpn libnotify-bin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Fedora</span>
+</span></span><span style="display:flex;"><span>sudo dnf install openvpn libnotify
+</span></span></code></pre></div><h3 id="protonvpn-configuration-files">ProtonVPN Configuration Files</h3>
+<p>Download OpenVPN configs from <a href="https://account.protonvpn.com/downloads">account.protonvpn.com</a> under Downloads → OpenVPN configuration files. Select the servers you want to use.</p>
+<p>Install the downloaded configs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#6272a4"># Move configs to OpenVPN directory</span>
+</span></span><span style="display:flex;"><span>sudo mv ~/Downloads/*.ovpn /etc/openvpn/client/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Rename .ovpn to .conf (systemd requirement)</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">cd</span> /etc/openvpn/client/
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> file in *.ovpn; <span style="color:#ff79c6">do</span>
+</span></span><span style="display:flex;"><span>    sudo mv <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$file</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">file</span>%.ovpn<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">.conf&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">done</span>
+</span></span></code></pre></div><blockquote>
+<p><strong>Note</strong>: The <code>.conf</code> extension is required by systemd&rsquo;s OpenVPN service. Files with <code>.ovpn</code> extensions won&rsquo;t be recognized.</p>
+</blockquote>
+<h3 id="authentication-setup">Authentication Setup</h3>
+<p>Create a credentials file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo nano /etc/openvpn/client/protonvpn-credentials.txt
+</span></span></code></pre></div><p>Add two lines:</p>
+<pre tabindex="0"><code>your_protonvpn_username
+your_protonvpn_password
+</code></pre><p>Secure the credentials file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chown openvpn:openvpn /etc/openvpn/client/protonvpn-credentials.txt
+</span></span><span style="display:flex;"><span>sudo chmod <span style="color:#bd93f9">600</span> /etc/openvpn/client/protonvpn-credentials.txt
+</span></span></code></pre></div><p>Fix auth references in configs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo sed -i <span style="color:#f1fa8c">&#39;s|^auth-user-pass$|auth-user-pass /etc/openvpn/client/protonvpn-credentials.txt|&#39;</span> /etc/openvpn/client/*.conf
+</span></span></code></pre></div><p>Verify the fix:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grep <span style="color:#f1fa8c">&#34;auth-user-pass&#34;</span> /etc/openvpn/client/*.conf
+</span></span></code></pre></div><p>Each line should show the full path to the credentials file.</p>
+<h3 id="systemd-timeout-configuration">Systemd Timeout Configuration</h3>
+<p>OpenVPN connections can take time to establish. Increase the systemd timeout to prevent premature failures:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mkdir -p /etc/systemd/system/openvpn-client@.service.d/
+</span></span><span style="display:flex;"><span>sudo tee /etc/systemd/system/openvpn-client@.service.d/override.conf <span style="color:#f1fa8c">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">[Service]
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">TimeoutStartSec=120
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">EOF</span>
+</span></span><span style="display:flex;"><span>sudo systemctl daemon-reload
+</span></span></code></pre></div><p>This gives OpenVPN 120 seconds to establish a connection.</p>
+<h2 id="script-implementation">Script Implementation</h2>
+<h3 id="project-structure">Project Structure</h3>
+<pre tabindex="0"><code>~/.config/waybar/
+├── vpn-toggle.sh    # Manages VPN connections
+└── vpn-status.sh    # Displays current status
+</code></pre><h3 id="vpn-toggle-script">VPN Toggle Script</h3>
+<p>Create the toggle script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p ~/.config/waybar
+</span></span><span style="display:flex;"><span>touch ~/.config/waybar/vpn-toggle.sh
+</span></span><span style="display:flex;"><span>chmod +x ~/.config/waybar/vpn-toggle.sh
+</span></span></code></pre></div><p>Complete script implementation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff79c6">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span><span style="color:#6272a4"># VPN Toggle Script for ProtonVPN with Random Server Selection</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">CONFIGS</span><span style="color:#ff79c6">=(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;ca-free&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;jp-free&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;no-free&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;mx-free-12.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;nl-free-135.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;pl-free-2.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;ro-free-28.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;sg-free-15.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;ch-free-4.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">STATE_FILE</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/tmp/protonvpn-state&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">CURRENT_FILE</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/tmp/protonvpn-current&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Map country codes to full names</span>
+</span></span><span style="display:flex;"><span>get_country_name<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$1</span><span style="color:#f1fa8c">&#34;</span> in
+</span></span><span style="display:flex;"><span>        ca<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Canada&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        jp<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Japan&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        no<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Norway&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        mx<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Mexico&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        nl<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Netherlands&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        pl<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Poland&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        ro<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Romania&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        sg<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Singapore&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        ch<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Switzerland&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        *<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Unknown&#34;</span> ;;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Check if VPN is active</span>
+</span></span><span style="display:flex;"><span>is_vpn_running<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    systemctl is-active --quiet <span style="color:#f1fa8c">&#34;openvpn-client@*&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Stop all VPN connections</span>
+</span></span><span style="display:flex;"><span>stop_vpn<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    sudo systemctl stop <span style="color:#f1fa8c">&#34;openvpn-client@*&#34;</span> 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>    rm -f <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$STATE_FILE</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$CURRENT_FILE</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>    sleep 0.5
+</span></span><span style="display:flex;"><span>    notify-send -t <span style="color:#bd93f9">3000</span> -u normal <span style="color:#f1fa8c">&#34;VPN Disconnected&#34;</span> <span style="color:#f1fa8c">&#34;Your connection is no longer protected&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Start random VPN connection</span>
+</span></span><span style="display:flex;"><span>start_vpn<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    sudo systemctl stop <span style="color:#f1fa8c">&#34;openvpn-client@*&#34;</span> 2&gt;/dev/null
+</span></span><span style="display:flex;"><span>    sleep <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Random server selection</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">RANDOM_CONFIG</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">CONFIGS</span>[<span style="color:#8be9fd;font-style:italic">$RANDOM</span> % <span style="color:#f1fa8c">${#</span><span style="color:#8be9fd;font-style:italic">CONFIGS</span>[@]<span style="color:#f1fa8c">}</span>]<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">COUNTRY_CODE</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$RANDOM_CONFIG</span><span style="color:#f1fa8c">&#34;</span> | cut -d<span style="color:#f1fa8c">&#39;-&#39;</span> -f1<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">COUNTRY_NAME</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>get_country_name <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$COUNTRY_CODE</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    notify-send -t <span style="color:#bd93f9">3000</span> -u normal <span style="color:#f1fa8c">&#34;VPN Connecting&#34;</span> <span style="color:#f1fa8c">&#34;Connecting to </span><span style="color:#8be9fd;font-style:italic">$COUNTRY_NAME</span><span style="color:#f1fa8c">...&#34;</span>
+</span></span><span style="display:flex;"><span>    sudo systemctl start <span style="color:#f1fa8c">&#34;openvpn-client@</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">RANDOM_CONFIG</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>    sleep <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Verify connection</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> systemctl is-active --quiet <span style="color:#f1fa8c">&#34;openvpn-client@</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">RANDOM_CONFIG</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>; <span style="color:#ff79c6">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;connected&#34;</span> &gt; <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$STATE_FILE</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$RANDOM_CONFIG</span><span style="color:#f1fa8c">&#34;</span> &gt; <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$CURRENT_FILE</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>        notify-send -t <span style="color:#bd93f9">3000</span> -u normal <span style="color:#f1fa8c">&#34;VPN Connected&#34;</span> <span style="color:#f1fa8c">&#34;Connected to </span><span style="color:#8be9fd;font-style:italic">$COUNTRY_NAME</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>        notify-send -t <span style="color:#bd93f9">3000</span> -u critical <span style="color:#f1fa8c">&#34;VPN Failed&#34;</span> <span style="color:#f1fa8c">&#34;Could not connect to </span><span style="color:#8be9fd;font-style:italic">$COUNTRY_NAME</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Toggle logic</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> is_vpn_running; <span style="color:#ff79c6">then</span>
+</span></span><span style="display:flex;"><span>    stop_vpn
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>    start_vpn
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fi</span>
+</span></span></code></pre></div><h4 id="script-components">Script Components</h4>
+<dl>
+<dt><strong>CONFIGS Array</strong></dt>
+<dd>List of available VPN configurations. Config names must match <code>.conf</code> files in <code>/etc/openvpn/client/</code> (without the extension).</dd>
+<dt><strong>State Files</strong></dt>
+<dd>Track current connection status and selected server for the status display script.</dd>
+<dt><strong>get_country_name()</strong></dt>
+<dd>Converts country codes to full names for better user experience.</dd>
+<dt><strong>is_vpn_running()</strong></dt>
+<dd>Checks if any OpenVPN service is active using systemd.</dd>
+<dt><strong>stop_vpn()</strong></dt>
+<dd>Stops all VPN connections, cleans state files, and notifies the user.</dd>
+<dt><strong>start_vpn()</strong></dt>
+<dd>Randomly selects a server, starts the connection, verifies success, and sends notifications.</dd>
+</dl>
+<h3 id="vpn-status-script">VPN Status Script</h3>
+<p>Create the status display script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch ~/.config/waybar/vpn-status.sh
+</span></span><span style="display:flex;"><span>chmod +x ~/.config/waybar/vpn-status.sh
+</span></span></code></pre></div><p>Complete implementation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff79c6">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span><span style="color:#6272a4"># VPN Status Script for Waybar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">CURRENT_FILE</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/tmp/protonvpn-current&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Map country codes to full names</span>
+</span></span><span style="display:flex;"><span>get_country_name<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$1</span><span style="color:#f1fa8c">&#34;</span> in
+</span></span><span style="display:flex;"><span>        ca<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Canada&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        jp<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Japan&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        no<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Norway&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        mx<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Mexico&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        nl<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Netherlands&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        pl<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Poland&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        ro<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Romania&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        sg<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Singapore&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        ch<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Switzerland&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        *<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;VPN&#34;</span> ;;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Output JSON for Waybar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> systemctl is-active --quiet <span style="color:#f1fa8c">&#34;openvpn-client@*&#34;</span>; <span style="color:#ff79c6">then</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> <span style="color:#ff79c6">[</span> -f <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$CURRENT_FILE</span><span style="color:#f1fa8c">&#34;</span> <span style="color:#ff79c6">]</span>; <span style="color:#ff79c6">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">CONFIG</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>cat <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$CURRENT_FILE</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">COUNTRY_CODE</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$CONFIG</span><span style="color:#f1fa8c">&#34;</span> | cut -d<span style="color:#f1fa8c">&#39;-&#39;</span> -f1<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">COUNTRY_NAME</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>get_country_name <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$COUNTRY_CODE</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;{\&#34;text\&#34;:\&#34; </span><span style="color:#8be9fd;font-style:italic">$COUNTRY_NAME</span><span style="color:#f1fa8c">\&#34;,\&#34;tooltip\&#34;:\&#34;VPN Connected: </span><span style="color:#8be9fd;font-style:italic">$CONFIG</span><span style="color:#f1fa8c">\&#34;,\&#34;class\&#34;:\&#34;connected\&#34;}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;{\&#34;text\&#34;:\&#34; Connected\&#34;,\&#34;tooltip\&#34;:\&#34;VPN Connected\&#34;,\&#34;class\&#34;:\&#34;connected\&#34;}&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;{\&#34;text\&#34;:\&#34;󰷷 Disconnected\&#34;,\&#34;tooltip\&#34;:\&#34;VPN Disconnected - Click to connect\&#34;,\&#34;class\&#34;:\&#34;disconnected\&#34;}&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">fi</span>
+</span></span></code></pre></div><p>The script outputs JSON with three fields:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Field</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>text</td>
+          <td>Display text in status bar</td>
+      </tr>
+      <tr>
+          <td>tooltip</td>
+          <td>Hover information</td>
+      </tr>
+      <tr>
+          <td>class</td>
+          <td>CSS class for styling</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="waybar-integration">Waybar Integration</h2>
+<h3 id="module-configuration">Module Configuration</h3>
+<p>Edit <code>~/.config/waybar/config</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&#34;modules-right&#34;</span>: [
+</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#34;custom/vpn&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#34;pulseaudio&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#34;clock&#34;</span>
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&#34;custom/vpn&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;exec&#34;</span>: <span style="color:#f1fa8c">&#34;~/.config/waybar/vpn-status.sh&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;interval&#34;</span>: <span style="color:#bd93f9">5</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;return-type&#34;</span>: <span style="color:#f1fa8c">&#34;json&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;on-click&#34;</span>: <span style="color:#f1fa8c">&#34;~/.config/waybar/vpn-toggle.sh&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">&#34;format&#34;</span>: <span style="color:#f1fa8c">&#34;{}&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Configuration Options</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Option</th>
+          <th>Value</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>exec</td>
+          <td>Script path</td>
+          <td>Status script location</td>
+      </tr>
+      <tr>
+          <td>interval</td>
+          <td>5</td>
+          <td>Update frequency (seconds)</td>
+      </tr>
+      <tr>
+          <td>return-type</td>
+          <td>json</td>
+          <td>Expected output format</td>
+      </tr>
+      <tr>
+          <td>on-click</td>
+          <td>Script path</td>
+          <td>Toggle script location</td>
+      </tr>
+      <tr>
+          <td>format</td>
+          <td>{}</td>
+          <td>Display format (uses JSON text field)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="module-styling">Module Styling</h3>
+<p>Add CSS to <code>~/.config/waybar/style.css</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>#custom-vpn.<span style="color:#50fa7b">connected</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">background-color</span>: <span style="color:#bd93f9">#a6e3a1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">color</span>: <span style="color:#bd93f9">#1e1e2e</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">padding</span>: <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">10</span><span style="color:#8be9fd">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">margin</span>: <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">5</span><span style="color:#8be9fd">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">border-radius</span>: <span style="color:#bd93f9">5</span><span style="color:#8be9fd">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">font-weight</span>: <span style="color:#ff79c6">bold</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>#custom-vpn.<span style="color:#50fa7b">disconnected</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">background-color</span>: <span style="color:#bd93f9">#f38ba8</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">color</span>: <span style="color:#bd93f9">#1e1e2e</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">padding</span>: <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">10</span><span style="color:#8be9fd">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">margin</span>: <span style="color:#bd93f9">0</span> <span style="color:#bd93f9">5</span><span style="color:#8be9fd">px</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">border-radius</span>: <span style="color:#bd93f9">5</span><span style="color:#8be9fd">px</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p><strong>Note</strong>: Colors are from Catppuccin theme. Adjust to match your color scheme.</p>
+</blockquote>
+<h2 id="sudo-configuration">Sudo Configuration</h2>
+<p>Configure passwordless sudo for VPN management:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo visudo
+</span></span></code></pre></div><p>Add this line (replace <code>your_username</code>):</p>
+<pre tabindex="0"><code>your_username ALL=(ALL) NOPASSWD: /usr/bin/systemctl start openvpn-client@*, /usr/bin/systemctl stop openvpn-client@*
+</code></pre><p>This restricts passwordless access to only these specific systemctl commands.</p>
+<h2 id="testing">Testing</h2>
+<h3 id="manual-testing">Manual Testing</h3>
+<p>Test toggle script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>~/.config/waybar/vpn-toggle.sh
+</span></span></code></pre></div><p>You should see a notification and VPN should connect.</p>
+<p>Verify connection:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl status <span style="color:#f1fa8c">&#34;openvpn-client@*&#34;</span>
+</span></span></code></pre></div><p>Test status script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>~/.config/waybar/vpn-status.sh
+</span></span></code></pre></div><p>Should output JSON with connection information.</p>
+<h3 id="waybar-integration-test">Waybar Integration Test</h3>
+<p>Restart Waybar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>killall waybar <span style="color:#ff79c6">&amp;&amp;</span> waybar &amp;
+</span></span></code></pre></div><p>The VPN module should appear in your status bar. Click it to toggle the connection.</p>
+<h2 id="customization">Customization</h2>
+<h3 id="adding-servers">Adding Servers</h3>
+<p>Add config names to the <code>CONFIGS</code> array:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">CONFIGS</span><span style="color:#ff79c6">=(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;ca-free&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;us-free-01.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;de-free-15.protonvpn.udp&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Add more servers here</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><p>Update country mapping:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>get_country_name<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$1</span><span style="color:#f1fa8c">&#34;</span> in
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># ... existing mappings</span>
+</span></span><span style="display:flex;"><span>        us<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;United States&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        de<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;Germany&#34;</span> ;;
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># Add more countries here</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">esac</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">}</span>
+</span></span></code></pre></div><h3 id="custom-notifications">Custom Notifications</h3>
+<p>Modify <code>notify-send</code> commands for custom icons:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>notify-send -i network-vpn -t <span style="color:#bd93f9">3000</span> -u normal <span style="color:#f1fa8c">&#34;VPN Connected&#34;</span> <span style="color:#f1fa8c">&#34;Connected to </span><span style="color:#8be9fd;font-style:italic">$COUNTRY_NAME</span><span style="color:#f1fa8c">&#34;</span>
+</span></span></code></pre></div><h3 id="connection-logging">Connection Logging</h3>
+<p>Add logging capability:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">LOG_FILE</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$HOME</span><span style="color:#f1fa8c">/.local/share/vpn-toggle.log&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># In start_vpn() after successful connection:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">$(</span>date<span style="color:#ff79c6">)</span><span style="color:#f1fa8c">: Connected to </span><span style="color:#8be9fd;font-style:italic">$COUNTRY_NAME</span><span style="color:#f1fa8c">&#34;</span> &gt;&gt; <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$LOG_FILE</span><span style="color:#f1fa8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># In stop_vpn():</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">$(</span>date<span style="color:#ff79c6">)</span><span style="color:#f1fa8c">: Disconnected&#34;</span> &gt;&gt; <span style="color:#f1fa8c">&#34;</span><span style="color:#8be9fd;font-style:italic">$LOG_FILE</span><span style="color:#f1fa8c">&#34;</span>
+</span></span></code></pre></div><h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="connection-issues">Connection Issues</h3>
+<p>Check OpenVPN logs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo journalctl -u openvpn-client@* -f
+</span></span></code></pre></div><h3 id="authentication-failures">Authentication Failures</h3>
+<p>Verify credentials:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo cat /etc/openvpn/client/protonvpn-credentials.txt
+</span></span><span style="display:flex;"><span>ls -la /etc/openvpn/client/protonvpn-credentials.txt
+</span></span></code></pre></div><h3 id="timeout-problems">Timeout Problems</h3>
+<p>Increase timeout value in systemd override:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo nano /etc/systemd/system/openvpn-client@.service.d/override.conf
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Change TimeoutStartSec to 180 or higher</span>
+</span></span><span style="display:flex;"><span>sudo systemctl daemon-reload
+</span></span></code></pre></div><h3 id="waybar-update-issues">Waybar Update Issues</h3>
+<p>Check script permissions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -la ~/.config/waybar/vpn-*.sh
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Should show: -rwxr-xr-x</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>This setup provides one-click VPN management directly from Waybar. The random server selection adds privacy benefits, and the visual feedback keeps you informed of your connection status.</p>
+<p>Key features:</p>
+<ul>
+<li><strong>Simple</strong>: ~100 lines of bash total</li>
+<li><strong>Reliable</strong>: Uses systemd for process management</li>
+<li><strong>Flexible</strong>: Easy to add/remove servers</li>
+<li><strong>Informative</strong>: Desktop notifications and status display</li>
+<li><strong>Secure</strong>: Passwordless sudo limited to specific commands</li>
+</ul>
+<p>The entire system is lightweight, uses only standard Linux tools, and requires minimal maintenance once configured.</p>
+      </article>
+      
+  <div class="tags pb-4 pt-2">
+    
+    
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/gnu/linux/">GNU/Linux</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/tutorials/">Tutorials</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/vpn/">VPN</a>
+  </div>
+
+      <div class="row">
+    <div class="col-md">
+        
+    </div>
+    <div class="col-md text-md-end">
+        
+    </div>
+</div>
+      
+    </div>
+  </div>
+  <footer>
+    <div class="container mt-4 pb-1">
+    <p class="small opacity-75">
+        Felle © 2026
+        
+        // powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/imgios/not-much">imgios/not-much</a>
+        
+    </p>
+</div>
+
+  </footer>
+
+  </main>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function detectThemePreferences() {
+      let themeClasses = ["text-dark"];
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          themeClasses = ["text-light", "dark"];
+      }
+      document.body.classList.add(...themeClasses);
+    }
+
+    detectThemePreferences();
+  </script>
+</body>
+</html>
