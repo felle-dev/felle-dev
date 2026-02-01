@@ -17,6 +17,13 @@
       <description>&lt;p&gt;Managing personal finances shouldn&amp;rsquo;t require handing over your transaction history to a third-party server. Fends is a simple budget management app that tracks your spending while keeping everything local to your device.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Flipz: A privacy-focused toolkit for random stuff</title>
+      <link>http://localhost:1313/posts/flipz-app-project/</link>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/flipz-app-project/</guid>
+      <description>&lt;p&gt;Flipz is a utility app I built for myself because I kept needing random passwords, fake email addresses for testing, and other generated data. Instead of visiting different websites or installing multiple apps, I threw everything into one place.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>How to create a custom VPN toggle script for Waybar</title>
       <link>http://localhost:1313/posts/vpn-waybar-tutorial/</link>
       <pubDate>Sun, 18 Jan 2026 00:00:00 +0000</pubDate>

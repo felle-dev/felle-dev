@@ -44,6 +44,14 @@ After installing, you'll see a clean dashboard showing your recent transactions.
 
 The transaction list shows everything you've recorded, organized by date. You can view details for any transaction by tapping on it. That's the entire workflow.
 
+## Screenshots
+
+<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
+  <img src="https://raw.githubusercontent.com/felle-dev/fends-app/main/screenshot/ss1.png" width="200" alt="Dashboard">
+  <img src="https://raw.githubusercontent.com/felle-dev/fends-app/main/screenshot/ss2.png" width="200" alt="Add Transaction">
+  <img src="https://raw.githubusercontent.com/felle-dev/fends-app/main/screenshot/ss3.png" width="200" alt="Transaction List">
+</div>
+
 ## Privacy By Design
 
 When you use Fends, your financial data never leaves your device. There's no account creation, no server to sync with, no analytics tracking your spending patterns. The app doesn't even request internet permissions.

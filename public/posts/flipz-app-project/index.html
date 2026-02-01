@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="http://localhost:1313/favicon.ico" />
+<meta property="og:url" content="http://localhost:1313/posts/flipz-app-project/">
+  <meta property="og:site_name" content="felle.site/">
+  <meta property="og:title" content="Flipz: A privacy-focused toolkit for random stuff">
+  <meta property="og:description" content="An all-in-one utility app for generating passwords, fake identities, random data, and other useful tools—all while keeping your data offline.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-01T00:00:00+00:00">
+    <meta property="article:tag" content="Flutter">
+    <meta property="article:tag" content="Privacy">
+    <meta property="article:tag" content="Open Source">
+
+<title>felle.site/ | Flipz: A privacy-focused toolkit for random stuff</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+  
+      <link rel="stylesheet" href="/css/palette/eink.css">
+
+      <script src="/js/main.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+  
+<body
+>
+  
+  <main>
+    
+  <div class="container pt-5">
+    <div class="row mt-5 pt-5">
+      
+  <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleMenu" aria-controls="collapsibleMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mt-3 mt-md-0" id="collapsibleMenu">
+      <ol class="breadcrumb fw-bold">
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/"
+        
+      >home</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/about"
+        
+      >about</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/posts"
+        class="text-decoration-underline link-offset-3"
+        
+      >posts</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/tags"
+        
+      >tags</a>
+      
+    </li>
+      </ol>
+    </div>
+  </nav>
+
+    </div>
+    <div class="post">
+      <header class="mb-4">
+        <h1 class="text-uppercase">Flipz: A privacy-focused toolkit for random stuff</h1>
+        
+        
+        <div aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item small">
+              
+              <time datetime="2026-02-01T00:00:00&#43;00:00">February 1, 2026</time>
+            </li>
+            
+            
+            <li class="breadcrumb-item small">
+              6 minutes
+            </li>
+          </ol>
+        </div>
+      </header>
+      
+      <article>
+        <p>Flipz is a utility app I built for myself because I kept needing random passwords, fake email addresses for testing, and other generated data. Instead of visiting different websites or installing multiple apps, I threw everything into one place.</p>
+<h2 id="whats-inside">What&rsquo;s Inside</h2>
+<p>The app groups features into three categories: generators, games, and utilities. Generators create passwords, usernames, email addresses, phone numbers, device names, complete fake identities, and Lorem Ipsum text. Games include random number generation, dice rolling, coin flipping, and a spinning wheel for making decisions. Utilities cover EXIF metadata removal from photos, quick system tiles for Android, unit conversion, and device information viewing.</p>
+<p>I built this primarily for testing and development work. When you&rsquo;re building forms or user flows, you need fake but realistic-looking data. Flipz generates that data without requiring internet access or sending anything to external servers.</p>
+<h2 id="why-build-this">Why Build This</h2>
+<p>There&rsquo;s no shortage of online generators for this kind of stuff. Websites will create passwords, generate fake people, and produce random numbers all day long. But using them means opening a browser, navigating to the site, waiting for ads to load, and trusting that your generated passwords aren&rsquo;t being logged somewhere.</p>
+<p>I wanted something offline that worked instantly. Pull out your phone, open the app, generate whatever you need, and close it. No accounts, no permissions beyond what&rsquo;s necessary, no tracking.</p>
+<h2 id="privacy-approach">Privacy Approach</h2>
+<p>Everything happens on your device. The app doesn&rsquo;t connect to the internet because it doesn&rsquo;t need to. Password generation uses cryptographically secure random number generation from the platform. Identity generation pulls from built-in datasets. EXIF removal reads and writes files locally.</p>
+<p>No analytics run in the background. No crash reporting phones home. The app doesn&rsquo;t request unnecessary permissions. On Android, it asks for storage access if you want to strip EXIF data from photos. That&rsquo;s it.</p>
+<p>This isn&rsquo;t marketing speak. The code is open source. You can verify that nothing suspicious happens by reading through it yourself.</p>
+<h2 id="platform-status">Platform Status</h2>
+<p>Right now, Flipz is Android-only. Flutter supports multiple platforms, and the codebase could theoretically run on iOS, Windows, Linux, and macOS with some work. But I built this for my own use on Android, and that&rsquo;s what&rsquo;s available.</p>
+<p>Some features like the quick tiles are Android-specific anyway. If there&rsquo;s demand for other platforms or if I need it myself on another device, I might expand support. For now, it&rsquo;s just an APK you can install on Android devices.</p>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<p>The app uses Flutter and Dart with Material Design 3 for the interface. Architecture focuses on keeping everything local and offline-capable. No backend services, no API calls, no external dependencies for core functionality.</p>
+<p>Password generation uses the platform&rsquo;s secure random number generator to create cryptographically strong passwords with customizable character sets and length. The identity generator pulls from curated datasets of names, addresses, and other personal information that look realistic but are completely fabricated.</p>
+<p>EXIF removal reads image metadata using standard libraries and writes clean versions without that data. The process happens entirely on device without uploading images anywhere.</p>
+<h2 id="using-it">Using It</h2>
+<p>Download the release for your platform from GitHub. No installation wizard, no setup process, no account creation. Open the app and start using whichever feature you need.</p>
+<p>Need a password? Open the password generator, adjust the settings if you want, and tap generate. Need a fake identity for testing a registration form? Open the identity generator and get a complete profile with name, address, phone number, and email.</p>
+<p>The interface stays minimal. Each feature gets its own screen with relevant options. Generate what you need, copy it to your clipboard, and move on.</p>
+<h2 id="screenshots">Screenshots</h2>
+<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
+  <img src="https://raw.githubusercontent.com/felle-dev/flipz-app/main/screenshot/ss1.png" width="200" alt="Home Screen">
+  <img src="https://raw.githubusercontent.com/felle-dev/flipz-app/main/screenshot/ss2.png" width="200" alt="Password Generator">
+  <img src="https://raw.githubusercontent.com/felle-dev/flipz-app/main/screenshot/ss3.png" width="200" alt="Identity Generator">
+  <img src="https://raw.githubusercontent.com/felle-dev/flipz-app/main/screenshot/ss4.png" width="200" alt="Utilities">
+  <img src="https://raw.githubusercontent.com/felle-dev/flipz-app/main/screenshot/ss5.png" width="200" alt="Games">
+  <img src="https://raw.githubusercontent.com/felle-dev/flipz-app/main/screenshot/ss6.png" width="200" alt="Settings">
+</div>
+<h2 id="development-use-cases">Development Use Cases</h2>
+<p>When testing web forms, you need data that looks real but isn&rsquo;t tied to actual people. Flipz generates complete profiles that pass basic validation without using real personal information.</p>
+<p>Testing phone number fields? Generate numbers that match the format you&rsquo;re validating against. Need to verify email handling? Create addresses that look legitimate without actually existing.</p>
+<p>Password field testing benefits from being able to quickly generate various password types: all lowercase, mixed case, with numbers, with special characters, different lengths. Adjust the settings and generate until you&rsquo;ve tested all your edge cases.</p>
+<h2 id="the-wheel-and-coin-flip">The Wheel and Coin Flip</h2>
+<p>Not everything needs to be serious utility functions. The spinning wheel and coin flip exist because sometimes you just need to make a decision and don&rsquo;t want to think about it. Add options to the wheel, spin it, let randomness decide.</p>
+<p>These features don&rsquo;t pretend to be particularly sophisticated. They&rsquo;re digital versions of physical randomness tools people have used forever. But they&rsquo;re there when you need them.</p>
+<h2 id="quick-tiles-on-android">Quick Tiles on Android</h2>
+<p>Android&rsquo;s quick settings tiles provide fast access to common actions. Flipz adds tiles for taking screenshots, adjusting media volume, locking the screen, and changing screen timeout. These aren&rsquo;t revolutionary features, but having them accessible from the quick settings panel saves a few taps.</p>
+<p>The tiles use Android&rsquo;s native APIs and follow system conventions. They look and behave like built-in quick settings because they use the same underlying framework.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>The app works for what I need it to do on Android. Future additions might include more generators if I find myself repeatedly needing something that isn&rsquo;t already covered. More utility functions that fit the privacy-focused, offline-capable approach could make sense.</p>
+<p>Expanding to other platforms is possible since it&rsquo;s built with Flutter. iOS would be the obvious next target, followed by desktop platforms if there&rsquo;s a reason to use it there. But that depends on whether I actually need it on those platforms or if someone else wants to contribute the work.</p>
+<p>Translations would help make the app accessible to non-English speakers. The codebase is structured to support localization, it just needs people willing to contribute translations.</p>
+<h2 id="contributing">Contributing</h2>
+<p>The project is open source under GPL v3.0. If you find bugs, have feature suggestions, or want to add functionality, the repository accepts pull requests. If you&rsquo;re not interested in coding but have ideas, open an issue.</p>
+<p>Adding generators for new types of data, improving existing ones, fixing bugs, improving documentation, or adding translations all count as useful contributions. The codebase isn&rsquo;t large or complicated. Most features are self-contained and easy to understand.</p>
+<h2 id="download">Download</h2>
+<p>Grab the latest APK from the <a href="https://github.com/felle-dev/flipz-app/releases">GitHub releases page</a>. Install it on your Android device. The source code is in the same repository if you want to build it yourself or port it to other platforms.</p>
+<p>I built this because I needed it. If you find it useful, great. If you think it&rsquo;s missing something, open an issue or add it yourself.</p>
+      </article>
+      
+  <div class="tags pb-4 pt-2">
+    
+    
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/flutter/">Flutter</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/privacy/">Privacy</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/open-source/">Open Source</a>
+  </div>
+
+      <div class="row">
+    <div class="col-md">
+        
+        <a href="http://localhost:1313/posts/vpn-waybar-tutorial/">
+            <span>previous: </span>
+            <span>How to create a custom VPN toggle script for Waybar</span>
+        </a>
+        
+    </div>
+    <div class="col-md text-md-end">
+        
+        <a href="http://localhost:1313/posts/fends-app-project/">
+            <span>next: </span>
+            <span>Fends: A privacy-first approach to budget management</span>
+        </a>
+        
+    </div>
+</div>
+      
+    </div>
+  </div>
+  <footer>
+    <div class="container mt-4 pb-1">
+    <p class="small opacity-75">
+        Felle © 2026
+        
+        // powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/imgios/not-much">imgios/not-much</a>
+        
+    </p>
+</div>
+
+  </footer>
+
+  </main>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function detectThemePreferences() {
+      let themeClasses = ["text-dark"];
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          themeClasses = ["text-light", "dark"];
+      }
+      document.body.classList.add(...themeClasses);
+    }
+
+    detectThemePreferences();
+  </script>
+</body>
+</html>
