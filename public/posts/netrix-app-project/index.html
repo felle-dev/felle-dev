@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="http://localhost:1313/favicon.ico" />
+<meta property="og:url" content="http://localhost:1313/posts/netrix-app-project/">
+  <meta property="og:site_name" content="felle.site/">
+  <meta property="og:title" content="Netrix: Understanding your network privacy">
+  <meta property="og:description" content="A network information and privacy assessment tool that shows you what the internet sees when you connect, with VPN and Tor detection built in.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-01T00:00:00+00:00">
+    <meta property="article:tag" content="Android">
+    <meta property="article:tag" content="Flutter">
+    <meta property="article:tag" content="Privacy">
+    <meta property="article:tag" content="Networking">
+
+<title>felle.site/ | Netrix: Understanding your network privacy</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+  
+      <link rel="stylesheet" href="/css/palette/eink.css">
+
+      <script src="/js/main.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+  
+<body
+>
+  
+  <main>
+    
+  <div class="container pt-5">
+    <div class="row mt-5 pt-5">
+      
+  <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleMenu" aria-controls="collapsibleMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mt-3 mt-md-0" id="collapsibleMenu">
+      <ol class="breadcrumb fw-bold">
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/"
+        
+      >home</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/about"
+        
+      >about</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/posts"
+        class="text-decoration-underline link-offset-3"
+        
+      >posts</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/tags"
+        
+      >tags</a>
+      
+    </li>
+      </ol>
+    </div>
+  </nav>
+
+    </div>
+    <div class="post">
+      <header class="mb-4">
+        <h1 class="text-uppercase">Netrix: Understanding your network privacy</h1>
+        
+        
+        <div aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item small">
+              
+              <time datetime="2026-02-01T00:00:00&#43;00:00">February 1, 2026</time>
+            </li>
+            
+            
+            <li class="breadcrumb-item small">
+              5 minutes
+            </li>
+          </ol>
+        </div>
+      </header>
+      
+      <article>
+        <p>Netrix is a network information tool that shows you what websites and services can see about your connection. It detects your public IP, determines your location, identifies if you&rsquo;re using a VPN or Tor, and assesses potential privacy leaks.</p>
+<h2 id="what-it-shows-you">What It Shows You</h2>
+<p>When you connect to the internet, servers see information about your connection. Your public IP address, your approximate location based on that IP, your ISP, and sometimes details about your network setup. Netrix gathers this information and presents it in one place.</p>
+<p>The app checks if you&rsquo;re using a VPN or Tor network by analyzing your connection characteristics. It examines your ISP name, organization details, and compares them against known patterns for VPN providers and Tor nodes. This helps verify that your privacy tools are actually working.</p>
+<p>Local network information shows your device&rsquo;s interfaces, local IP addresses, and connection details. This is useful for troubleshooting network issues or understanding your local network setup.</p>
+<h2 id="why-this-exists">Why This Exists</h2>
+<p>VPNs and Tor are supposed to hide your real IP and location. But sometimes they leak information through DNS queries, WebRTC, or misconfiguration. Sometimes they don&rsquo;t connect properly and you think you&rsquo;re protected when you&rsquo;re not.</p>
+<p>Netrix tells you what the internet actually sees. If you&rsquo;re using a VPN and the app shows your real location, something&rsquo;s wrong. If it detects a VPN provider when you expect it to, your connection is working as intended.</p>
+<p>This isn&rsquo;t a comprehensive privacy audit tool. It won&rsquo;t catch every possible leak or vulnerability. But it handles the basics: confirming your IP is what you expect, verifying VPN/Tor detection, and showing your general network status.</p>
+<h2 id="how-detection-works">How Detection Works</h2>
+<p>VPN detection analyzes several characteristics. It looks at your ISP name and organization for patterns that match known VPN providers. Terms like &ldquo;VPN,&rdquo; &ldquo;Proxy,&rdquo; or specific provider names trigger detection. The app also checks if your connection comes from a hosting provider rather than a residential ISP, which often indicates VPN or proxy use.</p>
+<p>Tor detection works similarly. It checks organization names for Tor-related identifiers, validates against the Tor Project&rsquo;s API when available, and compares your connection against a database of known Tor network ASNs (Autonomous System Numbers).</p>
+<p>These methods aren&rsquo;t perfect. Some VPNs don&rsquo;t advertise themselves in their ISP information. Some residential ISPs might trigger false positives if their naming happens to match common patterns. But the combination of checks catches most standard VPN and Tor usage.</p>
+<h2 id="screenshots">Screenshots</h2>
+<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
+  <img src="https://raw.githubusercontent.com/felle-dev/netrix-app/main/screenshots/ss1.png" width="200" alt="Network Status">
+  <img src="https://raw.githubusercontent.com/felle-dev/netrix-app/main/screenshots/ss2.png" width="200" alt="Connection Details">
+  <img src="https://raw.githubusercontent.com/felle-dev/netrix-app/main/screenshots/ss3.png" width="200" alt="Privacy Assessment">
+</div>
+<h2 id="custom-ip-lookup-providers">Custom IP Lookup Providers</h2>
+<p>The app uses third-party IP lookup services to gather network information. By default, it includes several reliable providers. You can add your own if you prefer different services or need specific information those services provide.</p>
+<p>Custom providers let you query APIs that return specialized data or that you trust more than the defaults. The app expects JSON responses with standard fields for IP, location, ISP, and organization information.</p>
+<p>Adding a provider means specifying its API endpoint. The app handles the request and parses the response according to common JSON structures used by IP lookup services.</p>
+<h2 id="privacy-approach">Privacy Approach</h2>
+<p>All processing happens on your device. The app makes requests to IP lookup services to gather information, but it doesn&rsquo;t send your data to any servers I control. There&rsquo;s no analytics, no tracking, no server-side logging.</p>
+<p>The third-party IP lookup services you query will see your request and could log it. That&rsquo;s inherent to how IP lookup works - you&rsquo;re asking them to tell you information about your connection. Choose providers you trust or run your own IP lookup service if you want complete control.</p>
+<p>Local network information comes directly from your device&rsquo;s network interfaces. This data never leaves your device.</p>
+<h2 id="platform-support">Platform Support</h2>
+<p>Netrix runs on Android, iOS, and web. The core functionality works identically across all platforms since network information gathering uses the same underlying principles regardless of platform.</p>
+<p>Web deployment means you can check your network status from any browser without installing an app. The tradeoff is that browsers limit some local network information access for security reasons.</p>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<p>The app uses Flutter with Material Design 3 for the interface. Network requests go through the HTTP package. State management uses StatefulWidget with AutomaticKeepAliveClientMixin to maintain state during navigation. Local storage through SharedPreferences keeps your custom provider configurations.</p>
+<p>The architecture keeps network logic separate from UI code. Detection methods live in dedicated functions that analyze response data and return detection results. This makes it easy to add new detection patterns or modify existing ones.</p>
+<h2 id="using-it">Using It</h2>
+<p>Launch the app and it automatically checks your network status. The main screen shows your public IP, location, ISP, and whether VPN or Tor is detected. Pull down to refresh or tap the refresh button to recheck.</p>
+<p>Access provider settings to add or remove IP lookup services. The app cycles through available providers to cross-reference information and improve detection accuracy.</p>
+<p>Local network information appears in a separate section showing your device&rsquo;s network interfaces and addresses.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>Detection patterns could expand to cover more VPN providers and edge cases. The current patterns catch major providers and obvious hosting connections, but there&rsquo;s always room for improvement.</p>
+<p>Additional privacy checks might include DNS leak detection or WebRTC leak identification. These would require different approaches than simple IP lookup but would make the privacy assessment more comprehensive.</p>
+<p>The web version could use additional browser APIs for gathering network information where available and permitted by browser security policies.</p>
+<h2 id="download">Download</h2>
+<p>The latest release is available on the <a href="https://github.com/felle-dev/netrix-app/releases">GitHub releases page</a>. The source code is in the same repository if you want to build it yourself or contribute improvements.</p>
+<p>This is a tool for understanding what your network connection reveals. Use it to verify your privacy tools work correctly and to understand what information you&rsquo;re broadcasting when you connect to the internet.</p>
+      </article>
+      
+  <div class="tags pb-4 pt-2">
+    
+    
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/android/">Android</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/flutter/">Flutter</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/privacy/">Privacy</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/networking/">Networking</a>
+  </div>
+
+      <div class="row">
+    <div class="col-md">
+        
+        <a href="http://localhost:1313/posts/vpn-waybar-tutorial/">
+            <span>previous: </span>
+            <span>How to create a custom VPN toggle script for Waybar</span>
+        </a>
+        
+    </div>
+    <div class="col-md text-md-end">
+        
+        <a href="http://localhost:1313/posts/flipz-app-project/">
+            <span>next: </span>
+            <span>Flipz: A privacy-focused toolkit for random stuff</span>
+        </a>
+        
+    </div>
+</div>
+      
+    </div>
+  </div>
+  <footer>
+    <div class="container mt-4 pb-1">
+    <p class="small opacity-75">
+        Felle © 2026
+        
+        // powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/imgios/not-much">imgios/not-much</a>
+        
+    </p>
+</div>
+
+  </footer>
+
+  </main>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function detectThemePreferences() {
+      let themeClasses = ["text-dark"];
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          themeClasses = ["text-light", "dark"];
+      }
+      document.body.classList.add(...themeClasses);
+    }
+
+    detectThemePreferences();
+  </script>
+</body>
+</html>

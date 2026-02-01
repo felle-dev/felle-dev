@@ -23,5 +23,12 @@
       <guid>http://localhost:1313/posts/flipz-app-project/</guid>
       <description>&lt;p&gt;Flipz is a utility app I built for myself because I kept needing random passwords, fake email addresses for testing, and other generated data. Instead of visiting different websites or installing multiple apps, I threw everything into one place.&lt;/p&gt;</description>
     </item>
+    <item>
+      <title>Netrix: Understanding your network privacy</title>
+      <link>http://localhost:1313/posts/netrix-app-project/</link>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/netrix-app-project/</guid>
+      <description>&lt;p&gt;Netrix is a network information tool that shows you what websites and services can see about your connection. It detects your public IP, determines your location, identifies if you&amp;rsquo;re using a VPN or Tor, and assesses potential privacy leaks.&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Privacy on felle.site/</title>
-    <link>http://localhost:1313/tags/privacy/</link>
-    <description>Recent content in Privacy on felle.site/</description>
+    <title>Networking on felle.site/</title>
+    <link>http://localhost:1313/tags/networking/</link>
+    <description>Recent content in Networking on felle.site/</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Felle © {year}</copyright>
     <lastBuildDate>Sun, 01 Feb 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/privacy/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Flipz: A privacy-focused toolkit for random stuff</title>
-      <link>http://localhost:1313/posts/flipz-app-project/</link>
-      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/flipz-app-project/</guid>
-      <description>&lt;p&gt;Flipz is a utility app I built for myself because I kept needing random passwords, fake email addresses for testing, and other generated data. Instead of visiting different websites or installing multiple apps, I threw everything into one place.&lt;/p&gt;</description>
-    </item>
+    <atom:link href="http://localhost:1313/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Netrix: Understanding your network privacy</title>
       <link>http://localhost:1313/posts/netrix-app-project/</link>

@@ -4,6 +4,7 @@ title: "Flipz: A privacy-focused toolkit for random stuff"
 date: "2026-02-01"
 description: "An all-in-one utility app for generating passwords, fake identities, random data, and other useful tools—all while keeping your data offline."
 tags: [
+    "Android",
     "Flutter",
     "Privacy",
     "Open Source",
