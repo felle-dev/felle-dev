@@ -31,6 +31,13 @@
       <description>&lt;p&gt;Netrix is a network information tool that shows you what websites and services can see about your connection. It detects your public IP, determines your location, identifies if you&amp;rsquo;re using a VPN or Tor, and assesses potential privacy leaks.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Valkyr: A simple password manager</title>
+      <link>http://localhost:1313/posts/valkyr-app-project/</link>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/valkyr-app-project/</guid>
+      <description>&lt;p&gt;Valkyr is a password manager that stores your credentials locally on your device. No cloud sync, no account creation, no monthly fees. Just a simple app for managing passwords.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>How to create a custom VPN toggle script for Waybar</title>
       <link>http://localhost:1313/posts/vpn-waybar-tutorial/</link>
       <pubDate>Sun, 18 Jan 2026 00:00:00 +0000</pubDate>

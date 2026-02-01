@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="http://localhost:1313/favicon.ico" />
+<meta property="og:url" content="http://localhost:1313/posts/valkyr-app-project/">
+  <meta property="og:site_name" content="felle.site/">
+  <meta property="og:title" content="Valkyr: A simple password manager">
+  <meta property="og:description" content="A straightforward password manager built with Flutter that keeps your credentials on your device without cloud sync or subscriptions.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-01T00:00:00+00:00">
+    <meta property="article:tag" content="Flutter">
+    <meta property="article:tag" content="Privacy">
+    <meta property="article:tag" content="Security">
+
+<title>felle.site/ | Valkyr: A simple password manager</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+  
+      <link rel="stylesheet" href="/css/palette/eink.css">
+
+      <script src="/js/main.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+  
+<body
+>
+  
+  <main>
+    
+  <div class="container pt-5">
+    <div class="row mt-5 pt-5">
+      
+  <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleMenu" aria-controls="collapsibleMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mt-3 mt-md-0" id="collapsibleMenu">
+      <ol class="breadcrumb fw-bold">
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/"
+        
+      >home</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/about"
+        
+      >about</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/posts"
+        class="text-decoration-underline link-offset-3"
+        
+      >posts</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/tags"
+        
+      >tags</a>
+      
+    </li>
+      </ol>
+    </div>
+  </nav>
+
+    </div>
+    <div class="post">
+      <header class="mb-4">
+        <h1 class="text-uppercase">Valkyr: A simple password manager</h1>
+        
+        
+        <div aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item small">
+              
+              <time datetime="2026-02-01T00:00:00&#43;00:00">February 1, 2026</time>
+            </li>
+            
+            
+            <li class="breadcrumb-item small">
+              5 minutes
+            </li>
+          </ol>
+        </div>
+      </header>
+      
+      <article>
+        <p>Valkyr is a password manager that stores your credentials locally on your device. No cloud sync, no account creation, no monthly fees. Just a simple app for managing passwords.</p>
+<h2 id="what-it-does">What It Does</h2>
+<p>The app lets you create, edit, and delete password entries. Each entry stores a title, username, password, and optional notes. That&rsquo;s the entire feature set. No browser extensions, no autofill integration, no password sharing between devices.</p>
+<p>When you need a password, open the app, find the entry, and copy what you need. When you create a new account somewhere, add a new entry to Valkyr. When you change a password, edit the existing entry.</p>
+<h2 id="why-another-password-manager">Why Another Password Manager</h2>
+<p>Most password managers want you to store your passwords in their cloud, install their browser extensions, and often pay a subscription. Some of these services are good and worth the money. But sometimes you just want a basic password list that stays on your phone.</p>
+<p>Valkyr exists for people who want local storage without the complexity of full-featured password managers. If you need cloud sync across devices, password sharing with team members, or automatic form filling, this isn&rsquo;t the right tool. But if you want a simple encrypted list of passwords on your phone, it works fine.</p>
+<h2 id="security-approach">Security Approach</h2>
+<p>The app encrypts your password database locally. Your master password unlocks the database when you open the app. The encryption happens on your device using standard cryptographic libraries.</p>
+<p>This approach has obvious limitations. If you lose your device without backups, your passwords are gone. If you forget your master password, there&rsquo;s no recovery mechanism. If someone gets physical access to your unlocked phone, they can access your passwords.</p>
+<p>These aren&rsquo;t bugs, they&rsquo;re design decisions. Local-only storage means local-only security. You&rsquo;re responsible for backing up your data and keeping your device secure.</p>
+<h2 id="screenshots">Screenshots</h2>
+<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
+  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss1.png" width="200" alt="Password List">
+  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss2.png" width="200" alt="Add Password">
+  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss3.png" width="200" alt="Password Details">
+</div>
+<h2 id="using-it">Using It</h2>
+<p>On first launch, you set a master password. This password encrypts your database, so choose something strong that you&rsquo;ll remember. The app doesn&rsquo;t validate password strength or require specific characters - that&rsquo;s your decision.</p>
+<p>After setup, you see your password list. It&rsquo;s empty initially. Tap the add button to create your first entry. Fill in the title, username, password, and any notes you want to keep. Save it.</p>
+<p>The entry appears in your list. Tap it to view details. From the detail view, you can copy the username or password to your clipboard, edit the entry, or delete it.</p>
+<p>That&rsquo;s the entire workflow. There are no categories, no tags, no folders, no search filters. Just a list of passwords ordered by when you created them.</p>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<p>Valkyr uses Flutter and Dart with Material Design 3 for the interface. The encryption library handles the cryptographic operations for securing the password database. Local storage keeps everything on device.</p>
+<p>The architecture is straightforward. A master password unlocks the encrypted database. Password entries get encrypted before storage and decrypted when needed. The UI provides basic CRUD operations for managing entries.</p>
+<h2 id="backup-responsibility">Backup Responsibility</h2>
+<p>Since everything stays local, you need to handle backups yourself. If you wipe your phone or lose your device, your passwords are gone unless you&rsquo;ve backed them up.</p>
+<p>The app stores its database in your device&rsquo;s app data directory. On Android, this typically isn&rsquo;t accessible without root unless you use backup tools. Regular device backups through your phone&rsquo;s backup system should include the app data, but verify this works before depending on it.</p>
+<p>Some users export their database periodically and store it somewhere safe. Others rely on device-level backup solutions. Either way, it&rsquo;s your responsibility to ensure you don&rsquo;t lose your passwords.</p>
+<h2 id="whats-missing">What&rsquo;s Missing</h2>
+<p>Valkyr doesn&rsquo;t have password generation built in. If you need to create a strong random password, use a separate tool or another app like Flipz. This might seem like an obvious missing feature for a password manager, but adding it would expand the scope beyond basic storage.</p>
+<p>There&rsquo;s no biometric unlock. You enter your master password every time you open the app. This is more secure in some ways and less convenient in others.</p>
+<p>No password strength indicators, no breach checking, no expiration reminders. The app stores what you give it without judgment or advice.</p>
+<h2 id="platform-support">Platform Support</h2>
+<p>Currently, Valkyr targets Android. Flutter supports multiple platforms, so iOS and desktop versions are possible. But the initial focus is Android because that&rsquo;s what I use.</p>
+<p>Expanding to other platforms would be straightforward from a code perspective. The main considerations are platform-specific security implementations and ensuring the encryption works correctly across different environments.</p>
+<h2 id="when-to-use-this">When to Use This</h2>
+<p>Valkyr makes sense if you want a simple password list on your phone without external dependencies. If you don&rsquo;t need passwords synced across devices, don&rsquo;t want browser integration, and prefer local storage over cloud services, this works.</p>
+<p>It doesn&rsquo;t make sense if you need those features password managers typically provide. No judgment either way - use whatever fits your requirements.</p>
+<h2 id="contributing">Contributing</h2>
+<p>The project is open source under GPL v3.0. If you find bugs, want to add features, or have suggestions, the repository accepts issues and pull requests.</p>
+<p>Adding features like password generation, categories, or search functionality would improve the app for some users. Porting to other platforms would make it accessible to more people. Security enhancements are always welcome as long as they maintain the local-only approach.</p>
+<h2 id="download">Download</h2>
+<p>Get the latest APK from the <a href="https://github.com/felle-dev/valkyr-app/releases">GitHub releases page</a>. Install it on your Android device, set up your master password, and start adding your passwords.</p>
+<p>The source code is available in the repository if you want to verify the security implementation or build it yourself.</p>
+<p>This is a basic password manager that does what it says: stores passwords on your device. Nothing more, nothing less.</p>
+      </article>
+      
+  <div class="tags pb-4 pt-2">
+    
+    
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/flutter/">Flutter</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/privacy/">Privacy</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/security/">Security</a>
+  </div>
+
+      <div class="row">
+    <div class="col-md">
+        
+        <a href="http://localhost:1313/posts/vpn-waybar-tutorial/">
+            <span>previous: </span>
+            <span>How to create a custom VPN toggle script for Waybar</span>
+        </a>
+        
+    </div>
+    <div class="col-md text-md-end">
+        
+        <a href="http://localhost:1313/posts/netrix-app-project/">
+            <span>next: </span>
+            <span>Netrix: Understanding your network privacy</span>
+        </a>
+        
+    </div>
+</div>
+      
+    </div>
+  </div>
+  <footer>
+    <div class="container mt-4 pb-1">
+    <p class="small opacity-75">
+        Felle © 2026
+        
+        // powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/imgios/not-much">imgios/not-much</a>
+        
+    </p>
+</div>
+
+  </footer>
+
+  </main>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function detectThemePreferences() {
+      let themeClasses = ["text-dark"];
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          themeClasses = ["text-light", "dark"];
+      }
+      document.body.classList.add(...themeClasses);
+    }
+
+    detectThemePreferences();
+  </script>
+</body>
+</html>
