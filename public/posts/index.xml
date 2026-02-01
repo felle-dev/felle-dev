@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Felle © {year}</copyright>
-    <lastBuildDate>Sun, 18 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fends: A privacy-first approach to budget management</title>
+      <link>http://localhost:1313/posts/fends-app-project/</link>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/fends-app-project/</guid>
+      <description>&lt;p&gt;Managing personal finances shouldn&amp;rsquo;t require handing over your transaction history to a third-party server. Fends is a simple budget management app that tracks your spending while keeping everything local to your device.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>How to create a custom VPN toggle script for Waybar</title>
       <link>http://localhost:1313/posts/vpn-waybar-tutorial/</link>

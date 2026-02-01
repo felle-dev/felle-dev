@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>felle.site/</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on felle.site/</description>
+    <title>Android on felle.site/</title>
+    <link>http://localhost:1313/tags/android/</link>
+    <description>Recent content in Android on felle.site/</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Felle © {year}</copyright>
     <lastBuildDate>Sun, 01 Feb 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Fends: A privacy-first approach to budget management</title>
       <link>http://localhost:1313/posts/fends-app-project/</link>
       <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/fends-app-project/</guid>
       <description>&lt;p&gt;Managing personal finances shouldn&amp;rsquo;t require handing over your transaction history to a third-party server. Fends is a simple budget management app that tracks your spending while keeping everything local to your device.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>How to create a custom VPN toggle script for Waybar</title>
-      <link>http://localhost:1313/posts/vpn-waybar-tutorial/</link>
-      <pubDate>Sun, 18 Jan 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/vpn-waybar-tutorial/</guid>
-      <description>&lt;p&gt;This tutorial demonstrates how to build a custom VPN toggle script for Waybar that integrates with ProtonVPN, provides random server selection, and sends desktop notifications.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
