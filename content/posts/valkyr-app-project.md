@@ -38,14 +38,6 @@ This approach has obvious limitations. If you lose your device without backups, 
 
 These aren't bugs, they're design decisions. Local-only storage means local-only security. You're responsible for backing up your data and keeping your device secure.
 
-## Screenshots
-
-<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
-  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss1.png" width="200" alt="Password List">
-  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss2.png" width="200" alt="Add Password">
-  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss3.png" width="200" alt="Password Details">
-</div>
-
 ## Using It
 
 On first launch, you set a master password. This password encrypts your database, so choose something strong that you'll remember. The app doesn't validate password strength or require specific characters - that's your decision.
