@@ -54,27 +54,9 @@ Valkyr uses Flutter and Dart with Material Design 3 for the interface. The encry
 
 The architecture is straightforward. A master password unlocks the encrypted database. Password entries get encrypted before storage and decrypted when needed. The UI provides basic CRUD operations for managing entries.
 
-## Backup Responsibility
-
-Since everything stays local, you need to handle backups yourself. If you wipe your phone or lose your device, your passwords are gone unless you've backed them up.
-
-The app stores its database in your device's app data directory. On Android, this typically isn't accessible without root unless you use backup tools. Regular device backups through your phone's backup system should include the app data, but verify this works before depending on it.
-
-Some users export their database periodically and store it somewhere safe. Others rely on device-level backup solutions. Either way, it's your responsibility to ensure you don't lose your passwords.
-
-## What's Missing
-
-Valkyr doesn't have password generation built in. If you need to create a strong random password, use a separate tool or another app like Flipz. This might seem like an obvious missing feature for a password manager, but adding it would expand the scope beyond basic storage.
-
-There's no biometric unlock. You enter your master password every time you open the app. This is more secure in some ways and less convenient in others.
-
-No password strength indicators, no breach checking, no expiration reminders. The app stores what you give it without judgment or advice.
-
 ## Platform Support
 
 Currently, Valkyr targets Android. Flutter supports multiple platforms, so iOS and desktop versions are possible. But the initial focus is Android because that's what I use.
-
-Expanding to other platforms would be straightforward from a code perspective. The main considerations are platform-specific security implementations and ensuring the encryption works correctly across different environments.
 
 ## When to Use This
 
