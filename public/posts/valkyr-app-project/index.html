@@ -90,7 +90,7 @@
             
             
             <li class="breadcrumb-item small">
-              5 minutes
+              4 minutes
             </li>
           </ol>
         </div>
@@ -108,12 +108,6 @@
 <p>The app encrypts your password database locally. Your master password unlocks the database when you open the app. The encryption happens on your device using standard cryptographic libraries.</p>
 <p>This approach has obvious limitations. If you lose your device without backups, your passwords are gone. If you forget your master password, there&rsquo;s no recovery mechanism. If someone gets physical access to your unlocked phone, they can access your passwords.</p>
 <p>These aren&rsquo;t bugs, they&rsquo;re design decisions. Local-only storage means local-only security. You&rsquo;re responsible for backing up your data and keeping your device secure.</p>
-<h2 id="screenshots">Screenshots</h2>
-<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
-  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss1.png" width="200" alt="Password List">
-  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss2.png" width="200" alt="Add Password">
-  <img src="https://raw.githubusercontent.com/felle-dev/valkyr-app/main/screenshot/ss3.png" width="200" alt="Password Details">
-</div>
 <h2 id="using-it">Using It</h2>
 <p>On first launch, you set a master password. This password encrypts your database, so choose something strong that you&rsquo;ll remember. The app doesn&rsquo;t validate password strength or require specific characters - that&rsquo;s your decision.</p>
 <p>After setup, you see your password list. It&rsquo;s empty initially. Tap the add button to create your first entry. Fill in the title, username, password, and any notes you want to keep. Save it.</p>
@@ -122,17 +116,8 @@
 <h2 id="technical-implementation">Technical Implementation</h2>
 <p>Valkyr uses Flutter and Dart with Material Design 3 for the interface. The encryption library handles the cryptographic operations for securing the password database. Local storage keeps everything on device.</p>
 <p>The architecture is straightforward. A master password unlocks the encrypted database. Password entries get encrypted before storage and decrypted when needed. The UI provides basic CRUD operations for managing entries.</p>
-<h2 id="backup-responsibility">Backup Responsibility</h2>
-<p>Since everything stays local, you need to handle backups yourself. If you wipe your phone or lose your device, your passwords are gone unless you&rsquo;ve backed them up.</p>
-<p>The app stores its database in your device&rsquo;s app data directory. On Android, this typically isn&rsquo;t accessible without root unless you use backup tools. Regular device backups through your phone&rsquo;s backup system should include the app data, but verify this works before depending on it.</p>
-<p>Some users export their database periodically and store it somewhere safe. Others rely on device-level backup solutions. Either way, it&rsquo;s your responsibility to ensure you don&rsquo;t lose your passwords.</p>
-<h2 id="whats-missing">What&rsquo;s Missing</h2>
-<p>Valkyr doesn&rsquo;t have password generation built in. If you need to create a strong random password, use a separate tool or another app like Flipz. This might seem like an obvious missing feature for a password manager, but adding it would expand the scope beyond basic storage.</p>
-<p>There&rsquo;s no biometric unlock. You enter your master password every time you open the app. This is more secure in some ways and less convenient in others.</p>
-<p>No password strength indicators, no breach checking, no expiration reminders. The app stores what you give it without judgment or advice.</p>
 <h2 id="platform-support">Platform Support</h2>
 <p>Currently, Valkyr targets Android. Flutter supports multiple platforms, so iOS and desktop versions are possible. But the initial focus is Android because that&rsquo;s what I use.</p>
-<p>Expanding to other platforms would be straightforward from a code perspective. The main considerations are platform-specific security implementations and ensuring the encryption works correctly across different environments.</p>
 <h2 id="when-to-use-this">When to Use This</h2>
 <p>Valkyr makes sense if you want a simple password list on your phone without external dependencies. If you don&rsquo;t need passwords synced across devices, don&rsquo;t want browser integration, and prefer local storage over cloud services, this works.</p>
 <p>It doesn&rsquo;t make sense if you need those features password managers typically provide. No judgment either way - use whatever fits your requirements.</p>

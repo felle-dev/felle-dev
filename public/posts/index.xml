@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Felle © {year}</copyright>
-    <lastBuildDate>Sun, 01 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 06 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vizora: Taking control of screen time</title>
+      <link>http://localhost:1313/posts/vizora-app-project/</link>
+      <pubDate>Fri, 06 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/vizora-app-project/</guid>
+      <description>&lt;p&gt;Vizora is an open source alternative to Google&amp;rsquo;s Digital Wellbeing for Android. It tracks app usage, sets time limits, and helps you build healthier digital habits—all while keeping your data completely local and transparent.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Fends: A privacy-first approach to budget management</title>
       <link>http://localhost:1313/posts/fends-app-project/</link>

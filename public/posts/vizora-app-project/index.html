@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="http://localhost:1313/favicon.ico" />
+<meta property="og:url" content="http://localhost:1313/posts/vizora-app-project/">
+  <meta property="og:site_name" content="felle.site/">
+  <meta property="og:title" content="Vizora: Taking control of screen time">
+  <meta property="og:description" content="A screen time management app that tracks app usage, sets timers, and helps you build healthier digital habits—all while keeping your data local.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-06T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-06T00:00:00+00:00">
+    <meta property="article:tag" content="Flutter">
+    <meta property="article:tag" content="Android">
+
+<title>felle.site/ | Vizora: Taking control of screen time</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+  
+      <link rel="stylesheet" href="/css/palette/eink.css">
+
+      <script src="/js/main.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+
+  
+<body
+>
+  
+  <main>
+    
+  <div class="container pt-5">
+    <div class="row mt-5 pt-5">
+      
+  <nav aria-label="breadcrumb" class="small navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleMenu" aria-controls="collapsibleMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mt-3 mt-md-0" id="collapsibleMenu">
+      <ol class="breadcrumb fw-bold">
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/"
+        
+      >home</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/about"
+        
+      >about</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/posts"
+        class="text-decoration-underline link-offset-3"
+        
+      >posts</a>
+      
+    </li>
+    <li class="breadcrumb-item my-1 my-md-0 ms-3 ms-md-0">
+      <a href="/tags"
+        
+      >tags</a>
+      
+    </li>
+      </ol>
+    </div>
+  </nav>
+
+    </div>
+    <div class="post">
+      <header class="mb-4">
+        <h1 class="text-uppercase">Vizora: Taking control of screen time</h1>
+        
+        
+        <div aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item small">
+              
+              <time datetime="2026-02-06T00:00:00&#43;00:00">February 6, 2026</time>
+            </li>
+            
+            
+            <li class="breadcrumb-item small">
+              6 minutes
+            </li>
+          </ol>
+        </div>
+      </header>
+      
+      <article>
+        <p>Vizora is an open source alternative to Google&rsquo;s Digital Wellbeing for Android. It tracks app usage, sets time limits, and helps you build healthier digital habits—all while keeping your data completely local and transparent.</p>
+<h2 id="what-it-tracks">What It Tracks</h2>
+<p>The app monitors which apps you use, how long you use them, and when you use them. It breaks down your usage by day, week, or custom date ranges. You can see total screen time, individual app usage, and hourly patterns throughout the day.</p>
+<p>Charts show usage distribution across apps and time patterns. Line charts reveal when during the day you&rsquo;re most active on your phone and which apps you use at different times.</p>
+<p>Session tracking records each time you open an app with start times. This gives you a detailed timeline of your phone usage rather than just aggregate statistics.</p>
+<h2 id="app-timers">App Timers</h2>
+<p>Set daily time limits for any app, similar to Digital Wellbeing. Choose anywhere from 5 to 300 minutes per day. The app shows visual indicators of how much time you&rsquo;ve used and how much remains.</p>
+<p>When you hit your limit, Vizora can block the app or just notify you that you&rsquo;ve exceeded your target. The blocking uses Android&rsquo;s accessibility service to detect when you open a restricted app and immediately returns you to the home screen.</p>
+<p>This isn&rsquo;t foolproof. Determined users can disable the accessibility service or uninstall Vizora. The device admin permission helps prevent accidental uninstall, but it&rsquo;s not a parental control system. It&rsquo;s a tool for people who want to limit their own usage.</p>
+<h2 id="home-screen-widgets">Home Screen Widgets</h2>
+<p>Two widget sizes give you quick access to usage stats. The compact 1x1 widget shows total screen time at a glance. The detailed 2x2 widget displays your top three apps and total time.</p>
+<p>Widgets update in real-time and include a refresh button. Tapping the widget opens Vizora to see full statistics.</p>
+<h2 id="smart-filtering">Smart Filtering</h2>
+<p>Not everything on your phone counts as meaningful screen time. Vizora automatically filters your launcher app since having it &ldquo;open&rdquo; while you&rsquo;re on the home screen isn&rsquo;t really usage. Apps you open for less than three minutes don&rsquo;t appear in statistics either - this eliminates accidental opens or quick checks.</p>
+<p>You can manually ignore specific apps if you don&rsquo;t want them tracked. System apps, utilities you use briefly, or anything else you consider background noise can be excluded from your statistics.</p>
+<h2 id="screenshots">Screenshots</h2>
+<div style="display: flex; justify-content: space-around; gap: 10px; flex-wrap: wrap;">
+  <img src="https://raw.githubusercontent.com/felle-dev/vizora-app/main/screenshots/ss1.png" width="200" alt="Usage Statistics">
+  <img src="https://raw.githubusercontent.com/felle-dev/vizora-app/main/screenshots/ss2.png" width="200" alt="App Timers">
+  <img src="https://raw.githubusercontent.com/felle-dev/vizora-app/main/screenshots/ss3.png" width="200" alt="Analytics">
+</div>
+<h2 id="why-build-this">Why Build This</h2>
+<p>Digital Wellbeing is built into Android, but it&rsquo;s proprietary Google software. You can&rsquo;t see what data it collects, how it processes your usage patterns, or whether it sends anything to Google&rsquo;s servers. The code is closed, and you have to trust Google&rsquo;s privacy claims.</p>
+<p>I wanted an open source alternative where everything is transparent. You can read the source code, verify what data is collected, and confirm nothing leaves your device. No Google services, no proprietary dependencies, no trusting someone else&rsquo;s privacy policy.</p>
+<p>Building it myself also meant I could add filtering and display options that Digital Wellbeing doesn&rsquo;t provide. Custom ignored apps, flexible time thresholds, and detailed session tracking all work exactly how I want them to.</p>
+<p>This is about control over your own usage data. If you&rsquo;re going to monitor your screen time, you should own that data completely.</p>
+<h2 id="permission-requirements">Permission Requirements</h2>
+<p>Vizora needs several Android permissions to function. Usage Stats permission lets it read app usage statistics from the system. Accessibility Service permission enables app blocking and real-time monitoring. Display Overlay permission shows timer notifications over other apps. Device Administrator permission prevents accidental uninstall.</p>
+<p>These are invasive permissions. The app asks for them clearly on first launch and explains what each one does. You can verify the source code to see they&rsquo;re only used for the stated purposes.</p>
+<p>The accessibility service in particular is a powerful permission that can see everything you do on your phone. Vizora uses it solely to detect when you open apps that have exceeded their timer limits. But you should always be cautious about granting accessibility permissions to any app.</p>
+<h2 id="privacy-approach">Privacy Approach</h2>
+<p>All data lives in local storage on your device. The app doesn&rsquo;t have internet permission and cannot send your usage data anywhere. No servers, no analytics, no cloud backup.</p>
+<p>This means you&rsquo;re responsible for backing up your data if you care about preserving it. Wiping your phone or uninstalling Vizora loses your usage history.</p>
+<h2 id="technical-implementation">Technical Implementation</h2>
+<p>Vizora uses Flutter with some native Kotlin code for Android-specific features. The Usage Stats Manager API provides usage data. The accessibility service handles app blocking. Widgets use Android&rsquo;s home screen widget framework.</p>
+<p>Charts come from the fl_chart package. Data persistence uses SharedPreferences for settings and limits. The UI follows Material Design 3 guidelines.</p>
+<p>The architecture separates usage tracking, timer enforcement, and UI concerns. Usage tracking reads from Android&rsquo;s usage stats and processes it into readable formats. Timer enforcement monitors app launches and intervenes when limits are exceeded. The UI displays everything and handles user configuration.</p>
+<h2 id="using-it">Using It</h2>
+<p>Install the APK and grant the required permissions. The app walks you through each permission with explanations. Once configured, usage tracking starts automatically.</p>
+<p>The main screen shows today&rsquo;s usage statistics. Swipe to see different date ranges. Tap an app to see detailed statistics for that specific app including hourly usage patterns and session history.</p>
+<p>To set a timer, tap the timer icon on any app in the usage list. Choose your daily limit in minutes. The app will track progress toward that limit and notify you when you approach or exceed it.</p>
+<p>Add the widget to your home screen from your launcher&rsquo;s widget menu. Choose between the compact or detailed version depending on how much information you want visible.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>Additional analytics options could help identify usage patterns. Things like comparing current week to previous weeks, identifying peak usage days, or highlighting unusual patterns.</p>
+<p>Better timer customization might include different limits for weekdays versus weekends, scheduled pauses for timers during certain hours, or temporary exceptions for specific days.</p>
+<p>The blocking mechanism could be more sophisticated. Right now it just returns you to the home screen. It could offer a screen explaining why the app is blocked, show your usage statistics for that app, or provide an override option with confirmation.</p>
+<h2 id="contributing">Contributing</h2>
+<p>The project is open source under GPL v3.0. Bug reports, feature requests, and pull requests are welcome. The repository includes development guidelines and contribution instructions.</p>
+<p>Testing on different Android versions helps ensure compatibility. The app targets API 24 (Android 7.0) and above, but behavior can vary across Android versions and device manufacturers.</p>
+<h2 id="download">Download</h2>
+<p>Get the latest APK from the <a href="https://github.com/felle-dev/vizora-app/releases">GitHub releases page</a>. The source code is in the same repository if you want to build it yourself or verify what the app actually does.</p>
+<p>If you&rsquo;re looking for an open source alternative to Digital Wellbeing that respects your privacy and gives you full control over your screen time data, Vizora does exactly that. No Google services required.</p>
+      </article>
+      
+  <div class="tags pb-4 pt-2">
+    
+    
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/flutter/">Flutter</a>
+        <a class="badge rounded-pill text-uppercase text-bg-secondary" href="/tags/android/">Android</a>
+  </div>
+
+      <div class="row">
+    <div class="col-md">
+        
+        <a href="http://localhost:1313/posts/fends-app-project/">
+            <span>previous: </span>
+            <span>Fends: A privacy-first approach to budget management</span>
+        </a>
+        
+    </div>
+    <div class="col-md text-md-end">
+        
+    </div>
+</div>
+      
+    </div>
+  </div>
+  <footer>
+    <div class="container mt-4 pb-1">
+    <p class="small opacity-75">
+        Felle © 2026
+        
+        // powered by <a href="https://gohugo.io/">hugo</a> and <a href="https://github.com/imgios/not-much">imgios/not-much</a>
+        
+    </p>
+</div>
+
+  </footer>
+
+  </main>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script>
+    function detectThemePreferences() {
+      let themeClasses = ["text-dark"];
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          themeClasses = ["text-light", "dark"];
+      }
+      document.body.classList.add(...themeClasses);
+    }
+
+    detectThemePreferences();
+  </script>
+</body>
+</html>
